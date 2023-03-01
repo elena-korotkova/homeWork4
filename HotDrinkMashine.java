@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -140,6 +141,7 @@ public class HotDrinkMashine implements WendingMashine{
                     }
                     this.get_product(dr);
                     step2=false;
+                    break;
                 }
 
             }
@@ -229,6 +231,11 @@ public class HotDrinkMashine implements WendingMashine{
 
     private void printCheck(Drink drink){
         System.out.println("Печать чека.");
+        Iterator<String> drinkField = drink;
+        while(drinkField.hasNext())
+        {
+            System.out.println(drinkField.next());
+        }
     }
 
     private void welcome(){

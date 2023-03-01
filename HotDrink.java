@@ -11,7 +11,7 @@ public abstract class HotDrink{
     public void set_type(String type){this.type = type;}
     public double get_cost(){return this.cost;};
     public void set_cost(double cost){this.cost=cost;};
-    public double get_volume(){return this.volume;};
+    public int get_volume(){return this.volume;};
     public void set_volume(Integer volume){this.volume=volume;};
 
 }
