@@ -1,6 +1,6 @@
 import java.util.Iterator;
 
-public class Drink extends HotDrink  implements Comparable<Drink>,Iterator<String>{
+public class Drink extends HotDrink implements Comparable<Drink>,Iterator<String>{
     private int temperature;
     int index;
 

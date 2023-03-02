@@ -7,28 +7,26 @@ import java.util.Set;
 
 public class HotDrinkMashine implements WendingMashine{
     private Map<Drink,Integer> drinkList = new HashMap<Drink,Integer>();    
-    Map<Integer,Drink> drinks = new HashMap<Integer,Drink>();
-    Scanner scan = new Scanner(System.in);
-    String drinkName;
-    Map<Integer,String> mainMenu = new HashMap<Integer,String>();
-    Map<Integer,String> namesMenu = new HashMap<Integer,String>();
-    Map<Integer,Drink> valuesMenu = new HashMap<Integer,Drink>();
+    private Map<Integer,Drink> drinks = new HashMap<Integer,Drink>();
+    private Scanner scan = new Scanner(System.in);
+    private String drinkName;
+    private Map<Integer,String> mainMenu = new HashMap<Integer,String>();
+    private Map<Integer,String> namesMenu = new HashMap<Integer,String>();
+    private Map<Integer,Drink> valuesMenu = new HashMap<Integer,Drink>();
 
     public HotDrinkMashine(){
         this.welcome();        
         this.add_product();
         this.run();
-       
+        
     }
     @Override
     public void add_product(){
         this.drinkList.put(new Drink("кофе","Эспрессо",100,50,80), 10);
         this.drinkList.put(new Drink("кофе","Эспрессо",150,80,80), 10);
         
-        
         this.drinkList.put(new Drink("кофе","Капучино",200,200,80), 10);
         this.drinkList.put(new Drink("кофе","Капучино",250,260,80), 10);
-        
         
         this.drinkList.put(new Drink("кофе","Латте Мокиато",120,150,80), 10);
         this.drinkList.put(new Drink("кофе","Латте Мокиато",250,200,80), 10);
@@ -121,29 +119,36 @@ public class HotDrinkMashine implements WendingMashine{
             mainMenu = (HashMap<Integer,String>)this.create_menu("",this.drinkList);
             show_menu("***** Меню напитков *****", mainMenu);
             String drinkType = this.user_input("Выберите напиток: ",mainMenu,"");
-            while (step2){
-                namesMenu = (HashMap<Integer,String>)this.create_menu(drinkType, drinkList);
-                this.clear();
-                show_menu("***** Меню напитков-1 *****", namesMenu);
-                String drinkName = this.user_input("Выберите напиток (0-вернуться на шаг): ",namesMenu,"0");
-                System.out.println(drinkName);
-                if(drinkName.compareTo("-1")==0)
-                {
-                    break;
-                }
-                while(true){
+            if(drinkType.compareToIgnoreCase("")!=0){
+                while (step2){
+                    namesMenu = (HashMap<Integer,String>)this.create_menu(drinkType, drinkList);
                     this.clear();
-                    valuesMenu = this.get_drinks(drinkName, drinkList);
-                    show_drinks("***** Меню напитков *****",valuesMenu);
-                    Drink dr = get_drink(valuesMenu,"0");
-                    if(dr.get_name().compareToIgnoreCase("back")==0){
+                    show_menu("***** Меню напитков-1 *****", namesMenu);
+                    String drinkName = this.user_input("Выберите напиток (0-вернуться на шаг): ",namesMenu,"0");
+                    System.out.println(drinkName);
+                    if(drinkName.compareTo("-1")==0)
+                    {
                         break;
                     }
-                    this.get_product(dr);
-                    step2=false;
-                    break;
-                }
+                    if(drinkName.compareToIgnoreCase("")!=0){
+                        while(true){
+                            this.clear();
+                            valuesMenu = this.get_drinks(drinkName, drinkList);
+                            show_drinks("***** Меню напитков *****",valuesMenu);
+                            Drink dr = get_drink(valuesMenu,"0");
+                           
+                            if(dr.get_name().compareToIgnoreCase("back")==0){
+                                break;
+                            }
+                            if(dr.get_name().compareToIgnoreCase("prev")!=0){
+                                this.get_product(dr);
+                                step2=false;
+                                break;
+                            }
+                        }
+                    }
 
+                }
             }
         }
     }
